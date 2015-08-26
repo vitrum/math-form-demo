@@ -38,11 +38,21 @@ gulp.task('html', ['clean:html'], function () {
     .pipe(gulp.dest('dist'))
     .pipe(connect.reload());
 });
-gulp.task('join-html', ['clean:html'], function () {
-  return gulp.src('src/join.jade')
+gulp.task('login-html', ['clean:html'], function () {
+  return gulp.src('src/login.jade')
     .pipe(isDist ? through() : plumber())
     .pipe(jade({ pretty: true }))
-    .pipe(rename('join.html'))
+    .pipe(rename('login.html'))
+    .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(gulp.dest('dist'))
+    .pipe(connect.reload());
+});
+gulp.task('other-jade', ['clean:html'], function () {
+  return gulp.src('src/**/*.jade')
+    .pipe(isDist ? through() : plumber())
+    .pipe(jade({
+      pretty: true
+    }))
     .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest('dist'))
     .pipe(connect.reload());
