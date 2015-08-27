@@ -2,7 +2,6 @@
   "name": "math-form-demo",
   "version": "0.0.1",
   "dependencies": {
-    "angular": "~1.3.9",
     "jquery": "~2.1.3"
   }
 }

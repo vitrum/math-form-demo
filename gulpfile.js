@@ -34,7 +34,7 @@ gulp.task('html', ['clean:html'], function () {
     .pipe(isDist ? through() : plumber())
     .pipe(jade({ pretty: true }))
     .pipe(rename('index.html'))
-    .pipe(htmlmin({collapseWhitespace: true}))
+    // .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest('dist'))
     .pipe(connect.reload());
 });
@@ -43,17 +43,16 @@ gulp.task('login-html', ['clean:html'], function () {
     .pipe(isDist ? through() : plumber())
     .pipe(jade({ pretty: true }))
     .pipe(rename('login.html'))
-    .pipe(htmlmin({collapseWhitespace: true}))
+    // .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest('dist'))
     .pipe(connect.reload());
 });
 gulp.task('other-jade', ['clean:html'], function () {
-  return gulp.src('src/**/*.jade')
+  return gulp.src('src/*.jade')
     .pipe(isDist ? through() : plumber())
-    .pipe(jade({
-      pretty: true
-    }))
-    .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(jade({pretty: true}))
+    .pipe(rename({extname: ".html"}))
+    // .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest('dist'))
     .pipe(connect.reload());
 });
@@ -117,8 +116,8 @@ gulp.task('connect', ['build'], function (done) {
 
 gulp.task('watch', function () {
   gulp.watch('src/**/*.jade', ['html']);
-  gulp.watch('src/**/*.jade', ['join-html']);
-  gulp.watch('src/**/*.html', ['docs-html']);
+  gulp.watch('src/**/*.jade', ['other-jade']);
+  // gulp.watch('src/**/*.html', ['docs-html']);
   gulp.watch('src/styles/**/*.styl', ['css']);
   gulp.watch('src/images/**/*', ['images']);
   gulp.watch('src/scripts/**/*.js', ['js']);
@@ -128,6 +127,6 @@ gulp.task('deploy', ['build'], function (done) {
   ghpages.publish(path.join(__dirname, 'dist'), { logger: gutil.log }, done);
 });
 
-gulp.task('build', ['js', 'html', 'join-html', 'other-html', 'css', 'images']);
+gulp.task('build', ['js', 'html', 'other-jade', 'other-html', 'css', 'images']);
 gulp.task('serve', ['connect', 'watch']);
 gulp.task('default', ['build']);
