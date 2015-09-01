@@ -21,15 +21,11 @@ html
               a(href='index.html' title='首页') 首页
             .login
               a(href='login.html' title='登陆') 登陆
-        .slider
-          .show_01
-            .hide_text
-          .arrow
         .content
           .info
-            //- .hide_text
-            p.title 公式测试项目是干嘛的
-            p 是一个登陆之后，提交些数据，然后算出一些可能性的项目
+            div(id="messagesDiv")
+            input(type="text" id="nameInput" placeholder="Name" )
+            input(type="text" id="passInput" placeholder="Password")
 
         .footer
           .logo
